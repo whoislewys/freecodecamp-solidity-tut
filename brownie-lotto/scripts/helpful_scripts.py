@@ -25,7 +25,7 @@ def get_account(index=None, id=None):
         or network.show_active() in FORKED_LOCAL_ENVIRONMENTS
     ):
         return accounts[0]
-
+    print('get acct testnet getting wallet from key: ', config["wallets"]["from_key"])
     return accounts.add(config["wallets"]["from_key"])
 
 
@@ -77,6 +77,8 @@ def fund_with_link(contract_address, account=None, link_token=None, amount=10000
   account = account if account else get_account()
   link_token = link_token if link_token else get_contract('link_token')
 
+  print(f'funding contract addr {contract_address} with {amount} link | from account: {account}!')
+
   # can create contract from ABI & address and interact with it that way
   tx = link_token.transfer(contract_address, amount, {'from': account})
   tx.wait(1)
@@ -86,7 +88,7 @@ def fund_with_link(contract_address, account=None, link_token=None, amount=10000
   # tx = link_token_contract.transfer(contract_address, amount, {'from': account})
   # tx.wait(1)
 
-  print('funded contact w/ some link!')
+  print(f'funded contract addr {contract_address} w/ some link!')
   return tx
 
 

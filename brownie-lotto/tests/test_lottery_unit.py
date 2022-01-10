@@ -81,18 +81,16 @@ def test_can_pick_winner_correctly():
   expectedWinnerStartingBalance = accounts[expectedWinnerIdx].balance()
 
   # Act
-  # make sure you have some local brownie accounts for this. brownie accounts generate <id>
+  # make sure you have some local brownie accounts for this. `brownie accounts generate <id>`
   # you find more: https://eth-brownie.readthedocs.io/en/stable/account-management.html#local-accounts
   fund_with_link(lottery.address) # remember, endlottery needs contract to have link for chainlink VRF request
+  # Mock the randomness call...
   # get the request id off the endlottery event it emits,
   # so that we can use it to mimic the chainlink node calling  VRFCoordinatorMock.callbackWithRandomness, which will call fulfillRandomness in our lotto contract
   endtx = lottery.endLottery({'from': account})
   reqid = endtx.events['RequestedRandomness']['requestId']
-
-
   get_contract('vrf_coordinator').callBackWithRandomness(reqid, dummyRandomness, lottery.address)
 
   # Asset
   assert lottery.recentWinner() == accounts[expectedWinnerIdx]
   assert accounts[expectedWinnerIdx].balance() == expectedWinnerStartingBalance + initialLotteryBalance
-
