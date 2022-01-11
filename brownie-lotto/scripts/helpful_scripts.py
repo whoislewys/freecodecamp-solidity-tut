@@ -39,6 +39,8 @@ contract_to_mock = {
 def get_contract(contract_name):
   """Grab contract addrs from brownie config
   if defined, otherwise deploy mock
+  
+  For example, on a mainnet fork environment a WETH contract will exist. On a mock development chain, it will not.
 
     Args:
       contract_name (string)
@@ -50,13 +52,13 @@ def get_contract(contract_name):
   if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
     if len(contract_type) <= 0:
       # check if there are any deployed contracts of type contract_type
-      # if no, deploy a mock
+      # if no, deploy mocks
       deploy_mocks()
-    contract = contract_type[-1] # get most recently deployed contract of type `contract_type`
+    # get most recently deployed contract of type `contract_type`
+    contract = contract_type[-1] 
   else:
+    # if mainnet or testnet, instantiate the contract. requires address, ABI
     contract_address = config['networks'][network.show_active()][contract_name]
-    # need address,
-    # ABI
     contract = Contract.from_abi(contract_type._name, contract_address, contract_type.abi)
   return contract
 

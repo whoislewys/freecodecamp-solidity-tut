@@ -12,4 +12,3 @@ run all tests:
 #### Integration
 `brownie test -k test_can_pick_winner --network rinkeby`
 
-
