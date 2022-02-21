@@ -61,7 +61,7 @@ contract Lottery is Ownable, VRFConsumerBase {
 
     // $50 / $2,000 / ETH (BUT solidity can't do decimals)
     // 50 * 100000 / 2000 (so do 50 * big number, then divide by eth price)
-    uint256 base18Price = uint256(price) * 10 ** 10; // non-eth pairs have 8 decimals. https://coinmarketcap.com/currencies/octopus-network/ eth pairs (e.g x/eth) have 18 decimals
+    uint256 base18Price = uint256(price) * 10 ** 10; // non-eth pairs have 8 decimals. eth pairs (e.g x/eth) have 18 decimals
     uint256 costToEnter = (usdEntryFee * 10 ** 18) / base18Price; // prob use safemath .div()
     return costToEnter;
 
