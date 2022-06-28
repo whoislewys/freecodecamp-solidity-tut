@@ -2,6 +2,9 @@
 
 > Important: Remember to get rinkeby/your testnet link before trying to run integration test/deploy
 
+## Compile
+`brownie compile`
+
 #### Unit
 run a specific test:
 `brownie test -k test_can_pick_winner_correctly`
